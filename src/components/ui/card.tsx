@@ -29,6 +29,14 @@ const CardHeader = React.forwardRef<
 ))
 CardHeader.displayName = "CardHeader"
 
+// const CardImage = React.forwardRef<
+//   HTMLImageElement,
+//   React.ImgHTMLAttributes<HTMLImageElement>
+// >(({ className, ...props }, ref) => (
+//   <img ref={ref} className={cn("h-auto w-full", className)} {...props} />
+// ));
+// CardImage.displayName = "CardImage";
+
 const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
