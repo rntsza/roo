@@ -12,7 +12,7 @@ import {
   DashboardSidebarFooter,
 } from '@/components/dashboard/sidebar'
 import { usePathname } from 'next/navigation'
-import { HomeIcon, MixerVerticalIcon } from '@radix-ui/react-icons'
+import { HomeIcon, MixerVerticalIcon, LightningBoltIcon, EnvelopeClosedIcon, ExclamationTriangleIcon, CubeIcon, HeartFilledIcon } from '@radix-ui/react-icons'
 import { UserDropdown } from './user-dropdown'
 import { Logo } from '@/components/logo'
 import { Session } from 'next-auth'
@@ -39,7 +39,7 @@ export function MainSidebar({ user }: MainSidebarProps) {
           <DashboardSidebarNavMain>
             <DashboardSidebarNavLink href="/app" active={isActive('/app')}>
               <HomeIcon className="w-3 h-3 mr-3" />
-              Tarefas
+              Início
             </DashboardSidebarNavLink>
             <DashboardSidebarNavLink
               href="/app/settings"
@@ -48,9 +48,44 @@ export function MainSidebar({ user }: MainSidebarProps) {
               <MixerVerticalIcon className="w-3 h-3 mr-3" />
               Configurações
             </DashboardSidebarNavLink>
+            <DashboardSidebarNavLink
+              href="/app/pricing"
+              active={isActive('/app/pricing')}
+            >
+              <LightningBoltIcon className="w-3 h-3 mr-3" />
+              Seu plano
+            </DashboardSidebarNavLink>
+            <DashboardSidebarNavLink
+              href=""
+              active={isActive('#')}
+            >
+              <CubeIcon className="w-3 h-3 mr-3" />
+              Trilhas de aprendizado
+            </DashboardSidebarNavLink>
+            <DashboardSidebarNavLink
+              href=""
+              active={isActive('#')}
+            >
+              <HeartFilledIcon className="w-3 h-3 mr-3" />
+              Plano de estudo personalizado
+            </DashboardSidebarNavLink>
+            <DashboardSidebarNavLink
+              href="/app/pendingActivities"
+              active={isActive('/app/pendingActivities')}
+            >
+              <ExclamationTriangleIcon className="w-3 h-3 mr-3" />
+              Atividades Pendentes
+            </DashboardSidebarNavLink>
+            <DashboardSidebarNavLink
+              href=""
+              active={isActive('#')}
+            >
+              <EnvelopeClosedIcon className="w-3 h-3 mr-3" />
+              Caixa de mensagens
+            </DashboardSidebarNavLink>
+
           </DashboardSidebarNavMain>
         </DashboardSidebarNav>
-
         <DashboardSidebarNav className="mt-auto">
           <DashboardSidebarNavHeader>
             <DashboardSidebarNavHeaderTitle>
