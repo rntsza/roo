@@ -9,7 +9,11 @@ export function DashboardPage({
   className,
   children,
 }: DashboardPageGenericProps) {
-  return <section className={cn(['h-screen', className])}>{children}</section>
+  return (
+    <section className={cn(['h-screen bg-slate-300', className])}>
+      {children}
+    </section>
+  )
 }
 
 export function DashboardPageHeader({
@@ -17,7 +21,7 @@ export function DashboardPageHeader({
   children,
 }: DashboardPageGenericProps) {
   return (
-    <header className={cn(['px-6 py-3 border-b border-border', className])}>
+    <header className={cn(['px-6 py-3 border-b border-border flex items-center justify-between', className])}>
       {children}
     </header>
   )
@@ -28,7 +32,9 @@ export function DashboardPageHeaderTitle({
   children,
 }: DashboardPageGenericProps) {
   return (
-    <span className={cn(['text-sm text-muted-foreground uppercase', className])}>
+    <span
+      className={cn(['text-sm text-muted-foreground uppercase', className])}
+    >
       {children}
     </span>
   )

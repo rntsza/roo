@@ -11,7 +11,7 @@ export function DashboardSidebar({ className, children }: DashboardSideBarGeneri
   return (
     <aside
       className={cn([
-        'border-r border-border flex flex-col space-y-6',
+        'border-r border-border flex flex-col space-y-6 bg-slate-300',
         className,
       ])}
     >
@@ -77,7 +77,7 @@ export function DashboardSidebarNavLink({
     <Link
       href={href}
       className={cn([
-        'flex items-center text-xs px-3 py-2 rounded-md',
+        'flex items-center text-xs px-3 py-2 rounded-md ',
         active && 'bg-secondary',
         className,
       ])}

@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
+  ExitIcon,
   LockClosedIcon,
   MixerVerticalIcon,
   RocketIcon,
@@ -68,7 +69,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>
-          <LockClosedIcon className="w-3 h-3 mr-3" />
+          <ExitIcon className="w-3 h-3 mr-3" />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
