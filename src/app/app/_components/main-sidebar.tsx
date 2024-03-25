@@ -83,6 +83,13 @@ export function MainSidebar({ user }: MainSidebarProps) {
               <EnvelopeClosedIcon className="w-3 h-3 mr-3" />
               Caixa de mensagens
             </DashboardSidebarNavLink>
+            <DashboardSidebarNavLink
+              href="/app/initialModel"
+              active={isActive('/app/initialModel')}
+            >
+              <EnvelopeClosedIcon className="w-3 h-3 mr-3" />
+              Modelos iniciais
+            </DashboardSidebarNavLink>
 
           </DashboardSidebarNavMain>
         </DashboardSidebarNav>

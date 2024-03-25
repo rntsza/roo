@@ -1,0 +1,104 @@
+{
+    "id": "1",
+    "numeroVara": "1",
+    "nomeVara": "Nome da vara",
+    "nomeDaPeca": "Reclamação trabalhista",
+    "tipoDaPeca": "Reclamação",
+    "nomeDaAcao": "Ação de indenização por danos morais",
+    "autor": {
+        "nomeCompleto": "Pedro",
+        "cpf": "123.456.789-00",
+        "rg": "12.345.678-9",
+        "ctps": "1234567890",
+        "cnpj": "12.345.678/0001-90",
+        "pis": "1234567890",
+        "nomeDaMae": "Marina Maria",
+        "estadoCivil": "Solteiro",
+        "profissão": "Advogado",
+        "endereco": {
+            "logradouro": "Rua das Flores",
+            "numero": "123",
+            "bairro": "Bairro",
+            "complemento": "Casa",
+            "cidade": "São Paulo",
+            "estado": "SP",
+            "cep": "12345-678"
+        }
+    },
+    "advogado": {
+        "nome": "Nome do Advogado",
+        "oab": "Número OAB",
+        "enderecoProfissional": "Endereço do Escritório",
+        "contato": "Telefone/E-mail"
+    },
+    "reu": {
+        "nomeCompleto": "Nome do Réu",
+        "cnpj": "CNPJ do Réu",
+        "cpf": "CPF do Réu",
+        "rg": "RG do Réu",
+        "ctps": "CTPS do Réu",
+        "pis": "PIS do Réu",
+        "nomeDaMae": "Nome da Mãe do Réu",
+        "estadoCivil": "Estado Civil do Réu",
+        "profissão": "Profissão do Réu",
+        "endereco": {
+            "logradouro": "Rua do Réu",
+            "numero": "Número",
+            "bairro": "Bairro do Réu",
+            "complemento": "Complemento",
+            "cidade": "Cidade do Réu",
+            "estado": "Estado do Réu",
+            "cep": "CEP do Réu"
+        }
+    },
+    "preliminares": {
+        "justiçaGratuita": false,
+        "fatos": "Descrição detalhada dos fatos",
+        "fundamentos": "Fundamentação legal da ação",
+        "pedido": "Pedidos específicos da ação",
+        "valorDaCausa": "R$ 1.000,00",
+        "competenciaTerritorial": "São Paulo",
+        "competenciaMaterial": "Reclamação",
+        "competenciaFuncional": "Vara do Trabalho",
+        "prescriçãoBienal": false,
+        "prescriçãoQuinquenal": false
+    },
+    "documentosAnexados": [
+        {
+            "tipo": "Identidade",
+            "descricao": "RG do Autor",
+            "data": "Data de emissão"
+        }
+    ],
+    "dataAjuizamento": "Data do Ajuizamento",
+    "foroPreferencia": "Foro de Preferência",
+    "tutelaUrgencia": false,
+    "honorariosAdvocaticios": "Valor ou Percentual",
+    "notasAdicionais": "Outras informações relevantes",
+    "fatos": {
+        "fatos": "Descrição detalhada dos fatos",
+        "fundamentos": "Fundamentação legal da ação",
+        "pedido": "Pedidos específicos da ação"
+    },
+    "direitos": {
+        "direitos": "Direitos do Autor",
+        "fundamentos": "Fundamentos legais",
+        "pedido": "Pedidos específicos"
+    },
+    "pedidos": {
+        "pedidos": "Pedidos do Autor",
+        "fundamentos": "Fundamentos legais",
+        "pedido": "Pedidos específicos"
+    },
+    "provas": {
+        "provas": "Provas do Autor",
+        "fundamentos": "Fundamentos legais",
+        "pedido": "Pedidos específicos"
+    },
+    "requerimentos": {
+        "requerimentos": "Requerimentos do Autor",
+        "fundamentos": "Fundamentos legais",
+        "pedido": "Pedidos específicos"
+    }
+
+}
