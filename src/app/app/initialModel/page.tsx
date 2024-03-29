@@ -1,28 +1,37 @@
 import {
-    DashboardPage,
-    DashboardPageHeader,
-    DashboardPageHeaderTitle,
-    DashboardPageMain,
-  } from '@/components/dashboard/page'
-import JoditEditorComponent from '@/components/text-editor/page'
-import jsonToHtml from '@/lib/jsonToHtml'
+  DashboardPage,
+  DashboardPageHeader,
+  DashboardPageHeaderNav,
+  DashboardPageHeaderTitle,
+  DashboardPageMain,
+} from "@/components/dashboard/page";
+import JoditEditorComponent from "@/components/text-editor/page";
+import jsonToHtml from "@/lib/jsonToHtml";
 
-import data from '../../../components/text-editor/mock.json'
+import { Session } from "next-auth";
+import { getUserModels } from "./actions";
+import { Button } from "@/components/ui/button";
+import { PlusIcon } from "@radix-ui/react-icons";
 
-  export default async function Page() {
-    
-    // return <pre>{JSON.stringify(session?.user, null, 1)}</pre>
-    return (
-      <DashboardPage>
-        <DashboardPageHeader>
-          <DashboardPageHeaderTitle>Modelos iniciais</DashboardPageHeaderTitle>
-        </DashboardPageHeader>
-        <DashboardPageMain>
-          <h1>Modelos iniciais</h1>
-          <JoditEditorComponent content={jsonToHtml(data)} />
-          
-        </DashboardPageMain>
-      </DashboardPage>
-    )
-  }
-  
+
+export default async function Page() {
+
+  const models = await getUserModels();
+  console.log(models);
+  return (
+    <DashboardPage>
+      <DashboardPageHeader>
+        <DashboardPageHeaderTitle>Modelos iniciais</DashboardPageHeaderTitle>
+        <DashboardPageHeaderNav>
+          <Button variant="outline" size="sm">
+            <PlusIcon className="w-4 h-4 mr-3" />
+            Adicionar Modelo Inicial
+          </Button>
+        </DashboardPageHeaderNav>
+      </DashboardPageHeader>
+      <DashboardPageMain>
+        <JoditEditorComponent content={jsonToHtml("data")} />
+      </DashboardPageMain>
+    </DashboardPage>
+  );
+}

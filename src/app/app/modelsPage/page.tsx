@@ -1,8 +1,12 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import JoditEditorComponent from "@/components/text-editor/page";
-import { getUserInitialModels, getUsers, getInitialModel, getClientFromInitial } from "./actions";
+import {
+  getUserInitialModels,
+  getUsers,
+  getInitialModel,
+  getClientFromInitial,
+} from "./actions";
 import {
   DashboardPage,
   DashboardPageHeader,
@@ -10,72 +14,103 @@ import {
   DashboardPageHeaderTitle,
   DashboardPageMain,
 } from "@/components/dashboard/page";
-import { auth } from "@/services/auth";
-import { InitialModel, User } from "@prisma/client";
+// import { InitialModel, User } from "@prisma/client";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+interface Modelo {
+  id: string;
+  title: string;
+  modelText: string | null;
+  modelJson: string | null;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface User {
+  id: string;
+  nomeCompleto: string;
+  logradouro: string;
+  cep: string;
+  email: string;
+  
+}
 
 const ModelosPage = () => {
-  const [modelos, setModelos] = useState([]);
-  const [selectedModelo, setSelectedModelo] = useState(null);
-  const [selectedUser, setSelectedUser] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [users, setUsers] = useState([]);
+  const [modelos, setModelos] = useState<Modelo[]>([]);
+  const [originalModeloText, setOriginalModeloText] = useState("");
+  const [selectedModelo, setSelectedModelo] = useState<string | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUserDetails, setSelectedUserDetails] = useState<User[]>([]);
 
   useEffect(() => {
-    
-    const fetchModelos = async () => {
-      const response = await getUserInitialModels();
-      console.log(response)
-      setModelos(response);
+    const fetchData = async () => {
+      const modelosResponse = await getUserInitialModels();
+      setModelos(modelosResponse);
+      const usersResponse = await getUsers();
+      setUsers(usersResponse);
+      const clientResponse = await getClientFromInitial();
+      setSelectedUserDetails(clientResponse);
     };
 
-    const fetchUsers = async () => {
-      const response = await getUsers();
-      setUsers(response);
-    };
-
-    const fetchClients = async () => {
-        const response = await getClientFromInitial();
-        console.log('asdasdasd', response)
-        setSelectedUser(response);
-    }
-
-    fetchClients();
-    fetchModelos();
-    fetchUsers();
+    fetchData();
   }, []);
 
-  const replacePlaceholders = (modelText: string, user: User) => {
-    let newText = modelText.replace(/{{nomeCompleto}}/g, user.nomeCompleto);
-    newText = newText.replace(/{{rg}}/g, user.rg || '');
-    newText = newText.replace(/{{cpf}}/g, user.cpf || '');
-    newText = newText.replace(/{{nacionalidade}}/g, user.nacionalidade || '');
-    newText = newText.replace(/{{oficao}}/g, user.oficao || '');
-    newText = newText.replace(/{{logradouro}}/g, user.logradouro || '');
-    newText = newText.replace(/{{cep}}/g, user.cep || '');
-    newText = newText.replace(/{{email}}/g, user.email || '');
-
-    return newText;
+  const replacePlaceholders = (modelText: any, user: any) => {
+    const placeholders = [
+      "nomeCompleto",
+      "nacionalidade",
+      "oficao",
+      "email",
+      "cep",
+      "telefone",
+      "empresa",
+      "cpf",
+      "rg",
+      "logradouro",
+      "cidade",
+      "estado",
+      "pais",
+    ];
+    return placeholders.reduce((newText, placeholder) => {
+      const regex = new RegExp(`{{${placeholder}}}`, "g");
+      return newText.replace(regex, user[placeholder] || `{{${placeholder}}}`);
+    }, modelText);
   };
 
-
-  const handleModeloSelect = async (model) => {
-    const response = await getInitialModel(model)
-    setSelectedModelo(response.modelText);
+  const handleModeloSelect = async (modelId: any) => {
+    const model = await getInitialModel(modelId);
+    setOriginalModeloText(model.modelText || '');
+    if (selectedUserDetails) {
+      const updatedModelText = replacePlaceholders(
+        model.modelText,
+        selectedUserDetails
+      );
+      setSelectedModelo(updatedModelText);
+    } else {
+      setSelectedModelo(model.modelText);
+    }
   };
 
-  const handleUserSelect = async (userId: string) => {
-    const user = users.find((user: User) => user.id === userId);
-    if (user && selectedModelo) {
-      const updatedModelText = replacePlaceholders(selectedModelo, user);
+  const handleUserDetails = async (userId: string) => {
+    const userDetails = selectedUserDetails.find((user) => user.id === userId);
+    if (userDetails) {
+      const updatedModelText = replacePlaceholders(
+        originalModeloText,
+        userDetails
+      );
       setSelectedModelo(updatedModelText);
     }
   };
-  const handleSelectedUser = async (selectedUser) => {
-    const response = await getClientFromInitial(selectedUser)
-    console.log('asdasd')
-    setSelectedUser(response);
-  };
-  
+
   return (
     <DashboardPage>
       <DashboardPageHeader>
@@ -83,34 +118,41 @@ const ModelosPage = () => {
         <DashboardPageHeaderNav>Teste</DashboardPageHeaderNav>
       </DashboardPageHeader>
       <DashboardPageMain>
-        <div>
-          <h1>Modelos Iniciais</h1>
-          <select onChange={(e) => handleModeloSelect(e.target.value)}>
-          <option value="" selected disabled hidden>Escolha um modelo</option>
-            {modelos.map((modelo: InitialModel) => (
-              <option key={modelo.id} value={modelo.id}>
-                {modelo.title}
-              </option>
-            ))}
-          </select>
-          <select onChange={(e) => handleUserSelect(e.target.value)}>
-          <option value="" selected disabled hidden>Selecione o cliente</option>
-            {users.map((user: User) => (
-              <option key={user.id } value={user.id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
-          <select onChange={(e) => handleSelectedUser(e.target.value)}>
-          <option value="" selected disabled hidden>Selecione o cliente</option>
-            {selectedUser.map((selectedUser) => (
-              <option key={selectedUser.id } value={selectedUser.id}>
-                {selectedUser.nomeCompleto}
-              </option>
-            ))}
-          </select>
-          <JoditEditorComponent content={selectedModelo || ''}
-          />
+        <div className="flex flex-col items-center" >
+          {/* <h1>Modelos Iniciais</h1> */}
+          <div className="flex flex-row justify-evenly p-4 gap-6">
+            <Select onValueChange={(value) => handleModeloSelect(value)}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Selecione um modelo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Modelos</SelectLabel>
+                  {modelos.map((modelo) => (
+                    <SelectItem key={modelo.id} value={modelo.id}>
+                      {modelo.title}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Select onValueChange={(value) => handleUserDetails(value)}>
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Selecione um cliente" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Clientes</SelectLabel>
+                  {selectedUserDetails.map((user) => (
+                    <SelectItem key={user.id} value={user.id}>
+                      {user.nomeCompleto}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <JoditEditorComponent content={selectedModelo || ""} />
         </div>
       </DashboardPageMain>
     </DashboardPage>
@@ -118,4 +160,3 @@ const ModelosPage = () => {
 };
 
 export default ModelosPage;
-
